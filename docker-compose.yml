@@ -1,0 +1,29 @@
+version: '3.8'
+
+services: 
+  train:
+    build: 
+      context: ./Docker_training
+      dockerfile: Dockerfile
+    volumes:
+      - ./Docker_training/model.pkl:/Docker_training/model.pkl
+    command: python Classification.py
+    networks:
+      - ml_network
+  
+  app:
+    build: 
+      context: ./app
+      dockerfile: Dockerfile
+    volumes:
+      - ./Docker_training/model.pkl:/app/model.pkl
+    ports:
+      - "5000:5000"
+    networks:
+      - ml_network
+    depends_on:
+      - train
+
+networks:
+  ml_network:
+    driver: bridge
