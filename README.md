@@ -1,47 +1,49 @@
-# Classification des ECG
+# ECG Classification in a Docker Container and API Implementation
 
-Ce projet est une application de classification des ECG (électrocardiogrammes) utilisant l'apprentissage profond. Il est composé de deux parties principales : l'entraînement du modèle et l'API de prédiction.
+This project is an ECG (Electrocardiogram) classification application using deep learning. It consists of two main phases: the first phase involves training the model in a Docker container, and after training, we move to the second phase which involves implementing an API to perform various predictions.
 
-## Architecture du Projet
+## Project Architecture
 
-Le projet est structuré en deux services Docker principaux :
+The project is structured into two main Docker services:
 
-1. **Service d'Entraînement** (`Docker_training/`)
-   - Contient le script d'entraînement du modèle
-   - Utilise TensorFlow pour créer et entraîner un réseau de neurones
-   - Sauvegarde le modèle entraîné
+1. **Training Service** (`Docker_training/`)
+   - Contains the model training script
+   - Uses TensorFlow to create and train a neural network
+   - Saves the trained model
 
-2. **Service API** (`app/`)
-   - Fournit une API REST pour les prédictions
-   - Utilise Flask pour exposer les endpoints
-   - Charge le modèle entraîné pour faire des prédictions
+2. **API Service** (`app/`)
+   - Provides a REST API for predictions
+   - Uses Flask to expose the endpoints
+   - Loads the trained model to make predictions
 
-## Prérequis
+## Prerequisites
 
 - Docker
 - Docker Compose
 
 ## Installation
 
-1. Cloner le repository
-2. Exécuter la commande suivante pour démarrer les services :
+1. Clone the repository
+2. Run the following command to start the services:
 ```bash
 docker-compose up --build
 ```
 
 ## Structure des Données
 
-Le modèle est entraîné sur un dataset d'ECG (`ecg.csv`) avec les caractéristiques suivantes :
-- Features : F1, F2, ..., Fn (caractéristiques extraites des ECG)
-- Label : classe de l'ECG
+The model is trained on an ECG dataset (ecg.csv) with the following features:
+
+- Features: F1, F2, ..., Fn (features extracted from ECGs)
+- Label: ECG class
 
 ## Modèle
 
-Le modèle est un réseau de neurones avec l'architecture suivante :
-- Couche d'entrée : dimension adaptée aux features
-- Première couche cachée : 128 neurones avec activation ReLU
-- Deuxième couche cachée : 64 neurones avec activation ReLU
-- Couche de sortie : 1 neurone avec activation sigmoïde (classification binaire) ou softmax (classification multi-classes)
+The model is a neural network with the following architecture:
+
+- Input layer: dimension adapted to the features
+- First hidden layer: 128 neurons with ReLU activation
+- Second hidden layer: 64 neurons with ReLU activation
+- Output layer: 1 neuron with sigmoid activation (binary classification) or softmax (multi-class classification)
 
 ## API Endpoints
 
@@ -49,7 +51,7 @@ Le modèle est un réseau de neurones avec l'architecture suivante :
 - **URL**: `/predict`
 - **Méthode**: POST
 - **Description**: Fait une prédiction sur de nouvelles données ECG
-- **Format de la requête**: JSON contenant les features
+- **Format de la requête**: JSON containing the features
 - **Format de la réponse**: 
 ```json
 {
@@ -61,7 +63,7 @@ Le modèle est un réseau de neurones avec l'architecture suivante :
 ### 2. Health Check
 - **URL**: `/health`
 - **Méthode**: GET
-- **Description**: Vérifie l'état de l'API
+- **Description**: Makes a prediction on new ECG data
 - **Format de la réponse**:
 ```json
 {
@@ -69,21 +71,22 @@ Le modèle est un réseau de neurones avec l'architecture suivante :
 }
 ```
 
-## Utilisation
+## Usage
 
-1. L'API est accessible sur le port 5000
-2. Pour faire une prédiction, envoyer une requête POST à `http://localhost:5000/predict` avec les features au format JSON
-3. Le modèle retournera la classe prédite et la probabilité associée
+1. The API is accessible on port 5000
+2. To make a prediction, send a POST request to http://localhost:5000/predict with the features in JSON format
+3. The model will return the predicted class and the associated probability
 
 ## Performance
 
-Le modèle est évalué sur un ensemble de test avec :
-- Matrice de confusion
-- Rapport de classification détaillé
-- Précision globale
+The model is evaluated on a test set with:
+
+- Confusion matrix
+- Detailed classification report
+- Overall accuracy
 
 ## Maintenance
 
-- Le modèle est automatiquement entraîné au démarrage du service d'entraînement
-- Les prédictions sont effectuées en temps réel via l'API
-- Le système est conteneurisé pour une déploiement facile et une isolation des dépendances 
+- The model is automatically trained at the start of the training service
+- Predictions are made in real-time via the API
+- The system is containerized for easy deployment and dependency isolation
