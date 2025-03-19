@@ -1,4 +1,4 @@
-# ECG Classification in a Docker Container and API Implementation
+# Electrocardiogram Classification in a Docker Container and API Implementation
 
 This project is an ECG (Electrocardiogram) classification application using deep learning. It consists of two main phases: the first phase involves training the model in a Docker container, and after training, we move to the second phase which involves implementing an API to perform various predictions.
 
