@@ -4,6 +4,8 @@ This project is an ECG (Electrocardiogram) classification application using deep
 
 ## Project Architecture
 
+![Architecture](image.png)
+
 The project is structured into two main Docker services:
 
 1. **Training Service** (`Docker_training/`)
